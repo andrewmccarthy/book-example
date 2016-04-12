@@ -6,13 +6,13 @@ This respository is an attempt at a minimal conversion of the original book exam
 
 ## Requirements
 
-I am using a small package called [pytest-django](https://pytest-django.readthedocs.org/) which is a plugin for py.test. It adds a number of very convenient things to py.test for working with Django. Installing it with `pip install pytest-django` was all I needed. Installing pytest-django will also pull in py.test as a dependency as well.
+I am using a small package called [pytest-django](https://pytest-django.readthedocs.org/) by Andreas Pelme which is a plugin for py.test. It adds a number of very convenient things to py.test for working with Django. Installing it with `pip install pytest-django` was all I needed. Installing pytest-django will pull in py.test as a dependency as well. There's a [video from EuroPython 2013](https://www.youtube.com/watch?v=aUf8Fkb7TaY) about it.
 
 ## Caveats
 
 I'm not particularly experienced with Django or py.test. There may be mistakes, or things may not be "best practice". I'm very open to suggestions how this could be done better.
 
-This is also incomplete. If this updated README isn't a particular chapter's branch, then I haven't got that far yet!
+This is incomplete. So far, I've done up to and including Chapter 4.
 
 # Harry's Original README
 
