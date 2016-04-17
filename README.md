@@ -12,7 +12,7 @@ I am using a small package called [pytest-django](https://pytest-django.readthed
 
 I'm not particularly experienced with Django or py.test. There may be mistakes, or things may not be "best practice". I'm very open to suggestions how this could be done better.
 
-This is incomplete. So far, I've done up to and including Chapter 4.
+This is incomplete. So far, I've done up to and including Chapter 5.
 
 # Harry's Original README
 
