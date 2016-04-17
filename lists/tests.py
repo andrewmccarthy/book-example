@@ -6,18 +6,24 @@ from django.test import TestCase
 from lists.models import Item
 from lists.views import home_page
 
-class HomePageTest(TestCase):
+import pytest
+
+@pytest.mark.django_db
+class TestHomePage:
 
     def test_root_url_resolves_to_home_page_view(self):
         found = resolve('/')
-        self.assertEqual(found.func, home_page)
+        assert found.func == home_page
 
 
     def test_home_page_returns_correct_html(self):
         request = HttpRequest()
         response = home_page(request)
+        # If using Django 1.9 add request=request to fix a new problem
+        # https://groups.google.com/forum/#!topic/obey-the-testing-goat-book/fwY7ifEWKMU
+        # expected_html = render_to_string('home.html', request=request)
         expected_html = render_to_string('home.html')
-        self.assertEqual(response.content.decode(), expected_html)
+        assert response.content.decode() == expected_html
 
 
     def test_home_page_displays_all_list_items(self):
@@ -27,8 +33,8 @@ class HomePageTest(TestCase):
         request = HttpRequest()
         response = home_page(request)
 
-        self.assertIn('itemey 1', response.content.decode())
-        self.assertIn('itemey 2', response.content.decode())
+        assert 'itemey 1' in response.content.decode()
+        assert 'itemey 2' in response.content.decode()
 
 
     def test_home_page_can_save_a_POST_request(self):
@@ -38,9 +44,9 @@ class HomePageTest(TestCase):
 
         response = home_page(request)
 
-        self.assertEqual(Item.objects.count(), 1)
+        assert Item.objects.count() == 1
         new_item = Item.objects.first()
-        self.assertEqual(new_item.text, 'A new list item')
+        assert new_item.text == 'A new list item'
 
 
     def test_home_page_redirects_after_POST(self):
@@ -50,18 +56,19 @@ class HomePageTest(TestCase):
 
         response = home_page(request)
 
-        self.assertEqual(response.status_code, 302)
-        self.assertEqual(response['location'], '/')
+        assert response.status_code == 302
+        assert response['location'] == '/'
 
 
     def test_home_page_only_saves_items_when_necessary(self):
         request = HttpRequest()
         home_page(request)
-        self.assertEqual(Item.objects.count(), 0)
+        assert Item.objects.count() == 0
 
 
 
-class ItemModelTest(TestCase):
+@pytest.mark.django_db
+class ItemModelTest:
 
     def test_saving_and_retrieving_items(self):
         first_item = Item()
@@ -73,10 +80,10 @@ class ItemModelTest(TestCase):
         second_item.save()
 
         saved_items = Item.objects.all()
-        self.assertEqual(saved_items.count(), 2)
+        assert saved_items.count() == 2
 
         first_saved_item = saved_items[0]
         second_saved_item = saved_items[1]
-        self.assertEqual(first_saved_item.text, 'The first (ever) list item')
-        self.assertEqual(second_saved_item.text, 'Item the second')
+        assert first_saved_item.text == 'The first (ever) list item'
+        assert second_saved_item.text == 'Item the second'
 
